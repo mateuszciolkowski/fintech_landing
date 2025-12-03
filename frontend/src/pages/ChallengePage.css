@@ -1,0 +1,155 @@
+.challenge-page {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 100px);
+}
+
+.challenge-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0 24px 0;
+}
+
+.challenge-header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.challenge-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.challenge-icon {
+  position: relative;
+  display: inline-block;
+  color: #ffc107;
+  margin-bottom: 24px;
+}
+
+.challenge-glow {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, rgba(255, 193, 7, 0.3) 0%, transparent 70%);
+  animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+.challenge-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+}
+
+.challenge-description {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 24px 0;
+  line-height: 1.6;
+}
+
+.challenge-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.detail-icon {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.detail-icon.gold {
+  color: #ffc107;
+}
+
+.detail-icon.blue {
+  color: #00aeef;
+}
+
+.detail-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+.detail-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.claim-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #0066B3;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 16px 40px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 102, 179, 0.2);
+}
+
+.claim-btn:hover {
+  background: #005299;
+  box-shadow: 0 4px 12px rgba(0, 102, 179, 0.3);
+}
+
+.claim-btn:active {
+  transform: scale(0.98);
+}
+
+.challenge-info {
+  margin-top: 32px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+}
+
+.challenge-info h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 16px 0;
+}
+
+.challenge-info ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.challenge-info li {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.challenge-info li:last-child {
+  margin-bottom: 0;
+}
