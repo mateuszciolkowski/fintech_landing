@@ -114,6 +114,44 @@
   margin: 2px 0 0 0;
 }
 
+.generate-task-btn {
+  background: #0066B3;
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: auto;
+}
+
+.generate-task-btn:hover:not(:disabled) {
+  background: #005299;
+  transform: scale(1.05);
+}
+
+.generate-task-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.generate-task-btn .spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .task-card {
   display: flex;
   align-items: center;

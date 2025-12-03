@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star, MapPin, Maximize2, X, Bike, Bus, Sparkles, CheckCircle, QrCode } from 'lucide-react';
+import { Star, MapPin, Maximize2, X, Bike, Bus, Sparkles, CheckCircle, QrCode, RefreshCw } from 'lucide-react';
 import { mockUser, mockRanking } from '../data/mockData';
+import { generateDailyTask } from '../services/openai';
+import type { GeneratedTask } from '../services/openai';
 import './HomePageNew.css';
 
 declare global {
@@ -17,15 +19,29 @@ export function HomePage() {
   const [showFullMap, setShowFullMap] = useState(false);
   const [showBikeScanner, setShowBikeScanner] = useState(false);
   const [showTicketModal, setShowTicketModal] = useState(false);
+  const [isGeneratingTask, setIsGeneratingTask] = useState(false);
   
-  // Przykładowe zadanie generowane przez AI (będzie z backendu)
-  const dailyTask = {
+  // Zadanie generowane przez AI
+  const [dailyTask, setDailyTask] = useState<GeneratedTask>({
     id: 'task-1',
     title: 'Wybierz dziś komunikację miejską',
     description: 'Zamiast samochodu skorzystaj z MPK i zdobądź dodatkowe punkty dla swojego osiedla',
     points: 50,
     completed: false,
     icon: '🚌',
+  });
+
+  // Funkcja generowania zadania z OpenAI
+  const handleGenerateTask = async () => {
+    setIsGeneratingTask(true);
+    try {
+      const newTask = await generateDailyTask();
+      setDailyTask(newTask);
+    } catch (error) {
+      console.error('Failed to generate task:', error);
+    } finally {
+      setIsGeneratingTask(false);
+    }
   };
 
   const initializeMap = (mapElement: HTMLDivElement, zoom: number = 13) => {
@@ -125,6 +141,14 @@ export function HomePage() {
             <h3>Dzisiejsze wyzwanie</h3>
             <p className="task-subtitle">Wygenerowane specjalnie dla Ciebie</p>
           </div>
+          <button 
+            className="generate-task-btn" 
+            onClick={handleGenerateTask}
+            disabled={isGeneratingTask}
+            title="Wygeneruj nowe zadanie"
+          >
+            <RefreshCw size={16} className={isGeneratingTask ? 'spinning' : ''} />
+          </button>
         </div>
         <div className="task-card">
           <div className="task-emoji">{dailyTask.icon}</div>
