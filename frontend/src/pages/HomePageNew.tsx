@@ -6,25 +6,9 @@ export function HomePage() {
 
   return (
     <div className="home-page-redesigned">
-      {/* Status Bar */}
-      <div className="status-bar">
-        <span className="time">11:10</span>
-        <div className="status-icons">
-          <span>📶</span>
-          <span>📡</span>
-          <span>🔋 70</span>
-        </div>
-      </div>
-
-      {/* Header Icons */}
-      <div className="header-icons">
-        <div className="icon-item">🌐</div>
-        <div className="icon-item bell">
-          🔔
-          <span className="notification-dot"></span>
-        </div>
-        <div className="icon-item">💰 0,00 PLN</div>
-        <div className="icon-item">📍 W POBLIŻU</div>
+      {/* Navbar Image */}
+      <div className="navbar-container">
+        <img src="/navbar.png" alt="Navbar" className="navbar-image" />
       </div>
 
       {/* Tabs */}
@@ -51,6 +35,9 @@ export function HomePage() {
           </div>
         </div>
       )}
+
+      {/* Moje Osiedle Button */}
+      <button className="btn-moje-osiedle">MOJE OSIEDLE</button>
 
       {/* Tickets Section */}
       <div className="tickets-section">

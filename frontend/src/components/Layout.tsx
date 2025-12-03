@@ -26,11 +26,10 @@ export function Layout() {
           return (
             <button
               key={item.path}
-              className={`nav-item ${isActive ? 'active' : ''} ${item.highlight ? 'highlight' : ''}`}
-              onClick={() => item.path !== '#' && navigate(item.path)}
+              className={`nav-item ${isActive ? 'active' : ''}`}
+              onClick={() => navigate(item.path)}
             >
               <Icon size={24} />
-              <span>{item.label}</span>
             </button>
           );
         })}
