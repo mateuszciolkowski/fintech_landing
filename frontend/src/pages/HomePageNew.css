@@ -209,9 +209,18 @@
   flex-shrink: 0;
 }
 
-.complete-task-btn:hover {
+.complete-task-btn:hover:not(:disabled) {
   background: #005299;
   transform: scale(1.05);
+}
+
+.complete-task-btn.completed {
+  background: #4CAF50;
+  cursor: default;
+}
+
+.complete-task-btn:disabled {
+  opacity: 1;
 }
 
 /* Services Grid - Large Cards */
@@ -773,4 +782,124 @@
   font-size: 14px;
   font-weight: 600;
   color: #212121;
+}
+
+/* Verification Modal */
+.verification-modal-content {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.verification-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.verification-instruction {
+  font-size: 14px;
+  color: #212121;
+  text-align: center;
+  margin: 0;
+}
+
+.verification-task-info {
+  background: #f5f5f5;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+  width: 100%;
+}
+
+.verification-task-info strong {
+  display: block;
+  font-size: 15px;
+  color: #212121;
+  margin-bottom: 6px;
+}
+
+.upload-photo-btn {
+  background: #0066B3;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.upload-photo-btn:hover:not(:disabled) {
+  background: #005299;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 102, 179, 0.3);
+}
+
+.upload-photo-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.verification-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  width: 100%;
+}
+
+.verification-icon {
+  font-size: 64px;
+}
+
+.verification-message {
+  font-size: 16px;
+  text-align: center;
+  margin: 0;
+  color: #212121;
+  font-weight: 500;
+}
+
+.verification-result.success .verification-message {
+  color: #4CAF50;
+}
+
+.verification-result.failure .verification-message {
+  color: #F44336;
+}
+
+.try-again-btn {
+  background: #F44336;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+}
+
+.try-again-btn:hover {
+  background: #D32F2F;
+  transform: translateY(-2px);
 }

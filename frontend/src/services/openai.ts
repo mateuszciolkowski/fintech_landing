@@ -7,6 +7,11 @@ export interface GeneratedTask {
   icon: string;
 }
 
+export interface TaskVerificationResult {
+  verified: boolean;
+  message: string;
+}
+
 export async function generateDailyTask(): Promise<GeneratedTask> {
   const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
   
@@ -68,8 +73,16 @@ Przykłady zadań:
       throw new Error('No content in OpenAI response');
     }
 
+    // Usuń markdown code blocks jeśli są (```json ... ```)
+    let cleanedContent = content.trim();
+    if (cleanedContent.startsWith('```json')) {
+      cleanedContent = cleanedContent.replace(/```json\s*/g, '').replace(/```\s*$/g, '');
+    } else if (cleanedContent.startsWith('```')) {
+      cleanedContent = cleanedContent.replace(/```\s*/g, '');
+    }
+
     // Parsuj JSON z odpowiedzi
-    const taskData = JSON.parse(content.trim());
+    const taskData = JSON.parse(cleanedContent.trim());
 
     // Walidacja i tworzenie zadania
     const task: GeneratedTask = {
@@ -94,4 +107,134 @@ Przykłady zadań:
       icon: '🚌',
     };
   }
+}
+
+export async function verifyTaskCompletion(
+  taskTitle: string,
+  taskDescription: string,
+  imageFile: File
+): Promise<TaskVerificationResult> {
+  const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+  
+  if (!apiKey) {
+    throw new Error('OpenAI API key is not configured');
+  }
+
+  // Logowanie dla debugowania
+  console.log('🔍 Weryfikacja zadania:', {
+    title: taskTitle,
+    description: taskDescription,
+    imageSize: `${(imageFile.size / 1024).toFixed(2)} KB`,
+  });
+
+  try {
+    // Konwertuj obraz do base64
+    const base64Image = await fileToBase64(imageFile);
+
+    const prompt = `Jesteś asystentem weryfikującym wykonanie zadania w aplikacji miejskiej "Karta Łodzianina".
+
+Zadanie użytkownika: "${taskTitle}"
+Opis: "${taskDescription}"
+
+Przeanalizuj przesłane zdjęcie i oceń, czy użytkownik RZECZYWIŚCIE wykonał to zadanie.
+
+Przykłady weryfikacji:
+- Jeśli zadanie to "Skorzystaj z komunikacji miejskiej" - szukaj zdjęć wnętrza tramwaju/autobusu, biletomatu, przystanku
+- Jeśli zadanie to "Wypożycz rower miejski" - szukaj zdjęć roweru miejskiego, stacji rowerowej
+- Jeśli zadanie to "Odwiedź park" - szukaj zdjęć z parku, zieleni, ławek
+- Jeśli zadanie to "Weź udział w wydarzeniu kulturalnym" - szukaj zdjęć z muzeum, koncertu, teatru
+
+Odpowiedz TYLKO w formacie JSON:
+{
+  "verified": true/false,
+  "message": "Krótka wiadomość dla użytkownika (max 80 znaków)"
+}
+
+Jeśli zdjęcie pasuje do zadania: verified: true, message: "Świetnie! Zadanie zaliczone!"
+Jeśli zdjęcie NIE pasuje: verified: false, message: "To zdjęcie nie potwierdza wykonania zadania. Spróbuj ponownie."`;
+
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'system',
+            content: 'Jesteś asystentem weryfikującym wykonanie zadań przez analizę zdjęć. Odpowiadasz TYLKO w formacie JSON.',
+          },
+          {
+            role: 'user',
+            content: [
+              {
+                type: 'text',
+                text: prompt,
+              },
+              {
+                type: 'image_url',
+                image_url: {
+                  url: base64Image,
+                },
+              },
+            ],
+          },
+        ],
+        max_tokens: 300,
+        temperature: 0.3,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`OpenAI API error: ${error.error?.message || response.statusText}`);
+    }
+
+    const data = await response.json();
+    const content = data.choices[0]?.message?.content;
+
+    console.log('📨 Odpowiedź z OpenAI:', content);
+
+    if (!content) {
+      throw new Error('No content in OpenAI response');
+    }
+
+    // Usuń markdown code blocks jeśli są (```json ... ```)
+    let cleanedContent = content.trim();
+    if (cleanedContent.startsWith('```json')) {
+      cleanedContent = cleanedContent.replace(/```json\s*/g, '').replace(/```\s*$/g, '');
+    } else if (cleanedContent.startsWith('```')) {
+      cleanedContent = cleanedContent.replace(/```\s*/g, '');
+    }
+
+    console.log('🧹 Oczyszczona odpowiedź:', cleanedContent);
+
+    // Parsuj JSON z odpowiedzi
+    const result = JSON.parse(cleanedContent.trim());
+
+    console.log('✅ Wynik weryfikacji:', result);
+
+    return {
+      verified: result.verified || false,
+      message: result.message || 'Nie udało się zweryfikować zadania.',
+    };
+  } catch (error) {
+    console.error('Error verifying task:', error);
+    return {
+      verified: false,
+      message: 'Wystąpił błąd podczas weryfikacji. Spróbuj ponownie.',
+    };
+  }
+}
+
+// Helper function to convert File to base64
+async function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
 }
