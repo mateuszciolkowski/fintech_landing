@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import './HomePageNew.css';
 
-
 export function HomePage() {
   const [activeTab, setActiveTab] = useState('MICHAŁ');
-
-  // Usunięto tablicę 'tickets', ponieważ używasz teraz statycznych obrazków
 
   return (
     <div className="home-page-redesigned">
       {/* Status Bar */}
       <div className="status-bar">
-       
+        <span className="time">11:10</span>
+        <div className="status-icons">
+          <span>📶</span>
+          <span>📡</span>
+          <span>🔋 70</span>
+        </div>
       </div>
 
       {/* Header Icons */}
@@ -31,7 +33,7 @@ export function HomePage() {
           className={`tab ${activeTab === 'MICHAŁ' ? 'active' : ''}`}
           onClick={() => setActiveTab('MICHAŁ')}
         >
-          MATEUSZ
+          MICHAŁ
         </button>
         <button 
           className={`tab ${activeTab === 'DODAJ' ? 'active' : ''}`}
@@ -44,17 +46,15 @@ export function HomePage() {
       {/* Profile Card */}
       {activeTab === 'MICHAŁ' && (
         <div className="profile-card-container">
-            <div className="profile-card">
-              <img src="/profile_card.png" alt="Profile Card" className="profile-card-image" />
-              </div>
+          <div className="profile-card">
+            <img src="/profile_card.png" alt="Profile Card" className="profile-card-image" />
+          </div>
         </div>
       )}
 
-      {/* Tickets Section - Zmienione na statyczne obrazy */}
+      {/* Tickets Section */}
       <div className="tickets-section">
         <div className="tickets-grid">
-          
-          {/* Obrazek 1: święta.png */}
           <div className="ticket-card image-ticket">
             <img 
               src="/swieta.png" 
@@ -63,7 +63,6 @@ export function HomePage() {
             />
           </div>
 
-          {/* Obrazek 2: lomot.png */}
           <div className="ticket-card image-ticket">
             <img 
               src="/lomot.png" 
@@ -71,21 +70,23 @@ export function HomePage() {
               className="ticket-image"
             />
           </div>
-
         </div>
+
         <h2>POSIADANE BILETY</h2>
 
         {/* CTA Buttons */}
         <div className="cta-buttons">
           <button className="btn btn-pink">
-            🛒 KUP BILET
+            <img src="/rozowy.png" alt="Kup Bilet" className="btn-icon-img" />
+            <span className="btn-text">KUP BILET</span>
           </button>
           <button className="btn btn-blue">
-            📍 ZAPARKUJ
+            <img src="/niebieski.png" alt="Zaparkuj" className="btn-icon-img" />
+            <span className="btn-text">ZAPARKUJ</span>
           </button>
         </div>
 
-        {/* Empty state message (możesz to usunąć, jeśli zawsze będą obrazy) */}
+        {/* Empty state message */}
         <div className="empty-state">
           <p>Nie posiadasz jeszcze biletów. Kliknij w przycisk aby dokonać!</p>
         </div>

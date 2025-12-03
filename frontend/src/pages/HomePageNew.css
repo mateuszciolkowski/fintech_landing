@@ -280,13 +280,27 @@
   margin: 0 0 4px 0;
   text-transform: uppercase;
 }
-/* Styling dla sekcji biletów */
 /* ---------------------------------------------------- */
+.empty-state {
+  border: 1px dashed #333; /* Ustawienie czarnej, przerywanej linii */
+  border-radius: 15px; /* Dodanie delikatnego zaokrąglenia rogów */
+  
+  /* Centrowanie tekstu i padding wewnętrzny */
+  text-align: center;
+  padding: 10px 15px; /* Dodanie przestrzeni wewnątrz ramki */
+  margin-top: 15px; /* Dodanie odstępu od elementów powyżej (np. przycisków CTA) */
+  
+  /* Stylizacja tekstu */
+  font-size: 15px;
+  color: #333;
+}
 
-/* Ustawienie siatki dla dwóch kolumn (utrzymujemy to dla poprawnego rozmieszczenia) */
+.empty-state p {
+  margin: 0; 
+  line-height: 1.5; 
+}
 .tickets-grid {
     display: grid;
-    /* Dwie równe kolumny z odstępem */
     grid-template-columns: 1fr 1fr; 
     gap: 15px; 
     padding: 10px 0; 
@@ -321,4 +335,80 @@
     
     /* Zachowanie proporcji i widoczność całości obrazu */
     object-fit: contain; 
+}
+
+.cta-buttons {
+  display: flex;
+  /* Rozsuwa przyciski na lewo i prawo */
+  justify-content: space-between; 
+  /* Zmienione na 0, aby przylegały do wewnętrznych krawędzi kontenera .tickets-section (który ma 16px paddingu) */
+  padding: 0;
+  gap: 15px; /* Dodajemy odstęp między przyciskami zamiast używać space-between */
+  /* Aby przyciski rozciągnęły się równo: */
+  width: 100%;
+}
+
+/* Przycisk bazowy */
+.btn {
+  /* Kluczowe: Flex: 1 powoduje, że oba przyciski zajmują równą, maksymalną szerokość */
+  flex: 1; 
+  width: auto; /* Resetujemy, aby flex: 1 przejął kontrolę */
+  
+  padding: 18px 16px;
+  border: none;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-height: 56px;
+}
+
+
+.btn-icon-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.btn-text {
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.btn-pink {
+  background: linear-gradient(135deg, #e50c80 0%, #e50c80 100%);
+  color: white;
+}
+
+.btn-pink:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(233, 30, 99, 0.4);
+}
+
+.btn-pink:active {
+  transform: translateY(-2px);
+}
+
+.btn-blue {
+  background: linear-gradient(135deg, #0aa0e3 0%, #0aa0e3 100%);
+  color: white;
+}
+
+.btn-blue:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 153, 255, 0.4);
+}
+
+.btn-blue:active {
+  transform: translateY(-2px);
 }
