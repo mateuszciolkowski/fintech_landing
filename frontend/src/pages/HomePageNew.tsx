@@ -1,20 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star, MapPin, Maximize2, X, Bike, Bus, Sparkles, CheckCircle, QrCode } from 'lucide-react';
+import { Star, X, Bike, Bus, Sparkles, CheckCircle, QrCode, User } from 'lucide-react';
 import { mockUser, mockRanking } from '../data/mockData';
 import './HomePageNew.css';
 
-declare global {
-  interface Window {
-    google: any;
-  }
-}
-
 export function HomePage() {
   const navigate = useNavigate();
-  const mapRef = useRef<HTMLDivElement>(null);
-  const fullMapRef = useRef<HTMLDivElement>(null);
-  const [showFullMap, setShowFullMap] = useState(false);
   const [showBikeScanner, setShowBikeScanner] = useState(false);
   const [showTicketModal, setShowTicketModal] = useState(false);
   
@@ -28,84 +19,17 @@ export function HomePage() {
     icon: '🚌',
   };
 
-  const initializeMap = (mapElement: HTMLDivElement, zoom: number = 13) => {
-    if (!window.google) return null;
-    
-    const lodz = { lat: 51.7592, lng: 19.4560 };
-    const map = new window.google.maps.Map(mapElement, {
-      center: lodz,
-      zoom: zoom,
-      mapId: 'DEMO_MAP_ID',
-      disableDefaultUI: false,
-      zoomControl: true,
-      mapTypeControl: false,
-      streetViewControl: false,
-      fullscreenControl: false,
-    });
-
-    // Wydarzenia na mapie z klikalnymi markerami
-    const events = [
-      { id: '1', lat: 51.7753, lng: 19.4577, title: 'Jarmark Bożonarodzeniowy', location: 'Manufaktura', date: '2025-12-15' },
-      { id: '4', lat: 51.7592, lng: 19.4560, title: 'Koncert na Piotrkowskiej', location: 'Piotrkowska 104', date: '2025-12-20' },
-      { id: '2', lat: 51.7676, lng: 19.4738, title: 'Bieg Niepodległości', location: 'Park Poniatowskiego', date: '2025-12-08' },
-    ];
-
-    const infoWindow = new window.google.maps.InfoWindow();
-
-    events.forEach(event => {
-      const marker = document.createElement('div');
-      marker.className = 'map-marker';
-      marker.innerHTML = '📍';
-      marker.style.fontSize = '28px';
-      marker.style.cursor = 'pointer';
-      
-      const advancedMarker = new window.google.maps.marker.AdvancedMarkerElement({
-        position: { lat: event.lat, lng: event.lng },
-        map: map,
-        title: event.title,
-        content: marker,
-      });
-
-      advancedMarker.addListener('click', () => {
-        const eventDate = new Date(event.date).toLocaleDateString('pl-PL');
-        infoWindow.setContent(`
-          <div style="padding: 12px; max-width: 200px;">
-            <h3 style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #1a1a1a;">${event.title}</h3>
-            <p style="margin: 0 0 4px 0; font-size: 12px; color: #666;">📍 ${event.location}</p>
-            <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">📅 ${eventDate}</p>
-            <button onclick="window.location.href='/events/${event.id}'" style="background: #0066B3; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; width: 100%;">Zobacz szczegóły</button>
-          </div>
-        `);
-        infoWindow.open(map, advancedMarker);
-      });
-    });
-
-    return map;
-  };
-
-  useEffect(() => {
-    if (mapRef.current && window.google) {
-      initializeMap(mapRef.current);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (showFullMap && fullMapRef.current && window.google) {
-      initializeMap(fullMapRef.current, 14);
-    }
-  }, [showFullMap]);
-
   return (
     <div className="home-page-new">
       {/* Header */}
       <header className="home-header-new">
-        <div className="user-info-new">
-          <div className="avatar-new">
-            {mockUser.firstName[0]}{mockUser.lastName[0]}
+        <div className="header-content">
+          <div className="header-icon">
+            <User size={28} />
           </div>
-          <div className="user-text-new">
-            <p className="greeting-new">Dzień dobry,</p>
-            <h1 className="user-name-new">{mockUser.firstName}</h1>
+          <div>
+            <p className="header-subtitle">Dzień dobry,</p>
+            <h1>{mockUser.firstName}</h1>
           </div>
         </div>
         <div className="points-badge-new">
@@ -142,6 +66,18 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* QR Code Bar */}
+      <section className="qr-bar-section" onClick={() => navigate('/generate')}>
+        <div className="qr-bar-icon">
+          <QrCode size={28} />
+        </div>
+        <div className="qr-bar-content">
+          <h3>Mój kod QR</h3>
+          <p>Pokaż swój kod do skanowania</p>
+        </div>
+        <div className="qr-bar-arrow">→</div>
+      </section>
+
       {/* Services - Bike & Ticket */}
       <section className="services-section">
         <h2>Usługi miejskie</h2>
@@ -161,33 +97,6 @@ export function HomePage() {
             <p>Bilety jednorazowe i okresowe</p>
           </div>
         </div>
-      </section>
-
-      {/* QR Code Bar */}
-      <section className="qr-bar-section" onClick={() => navigate('/generate')}>
-        <div className="qr-bar-icon">
-          <QrCode size={28} />
-        </div>
-        <div className="qr-bar-content">
-          <h3>Mój kod QR</h3>
-          <p>Pokaż swój kod do skanowania</p>
-        </div>
-        <div className="qr-bar-arrow">→</div>
-      </section>
-
-      {/* Map Section */}
-      <section className="map-section">
-        <div className="map-header">
-          <h2>
-            <MapPin size={20} />
-            Mapa wydarzeń w okolicy
-          </h2>
-          <button className="expand-map-btn" onClick={() => setShowFullMap(true)}>
-            <Maximize2 size={16} />
-            Rozwiń
-          </button>
-        </div>
-        <div id="map" ref={mapRef}></div>
       </section>
 
       {/* Ranking Preview */}
@@ -216,21 +125,6 @@ export function HomePage() {
           ))}
         </div>
       </section>
-
-      {/* Full Screen Map Modal */}
-      {showFullMap && (
-        <div className="map-modal">
-          <div className="map-modal-content">
-            <div className="map-modal-header">
-              <h2>Mapa wydarzeń</h2>
-              <button className="close-modal-btn" onClick={() => setShowFullMap(false)}>
-                <X size={24} />
-              </button>
-            </div>
-            <div className="full-map" id="full-map" ref={fullMapRef}></div>
-          </div>
-        </div>
-      )}
 
       {/* Bike Scanner Modal */}
       {showBikeScanner && (
