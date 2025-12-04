@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './HomePageNew.css';
 
 export function HomePage() {
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('MICHAŁ');
 
   return (
@@ -38,13 +36,13 @@ export function HomePage() {
         </div>
       )}
 
-      {/* Moje Osiedle Button */}
-      <button 
-  className="btn-moje-osiedle" 
-  onClick={() => window.location.href = 'http://os4cs48co08ggsk0go4k0gso.130.61.95.56.sslip.io/'}
->
-  MOJE OSIEDLE
-</button>
+      {/* Moje Osiedle Image Link */}
+      <a 
+        href="http://os4cs48co08ggsk0go4k0gso.130.61.95.56.sslip.io/"
+        className="osiedle-image-link"
+      >
+        <img src="/osiedle.png" alt="Moje Osiedle" className="osiedle-image" />
+      </a>
 
       {/* Tickets Section */}
       <div className="tickets-section">

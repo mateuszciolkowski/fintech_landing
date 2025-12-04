@@ -375,31 +375,37 @@
   transform: translateY(-2px);
 }
 
-/* Moje Osiedle Button */
-.btn-moje-osiedle {
+/* Moje Osiedle Image Link */
+.osiedle-image-link {
+  display: block;
   width: calc(100% - 32px);
   margin: 20px 16px;
-  padding: 16px 24px;
-  background: linear-gradient(135deg, #0099FF 0%, #0077DD 100%);
-  color: white;
-  border: none;
   border-radius: 20px;
-  font-size: 16px;
-  font-weight: 700;
+  overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
   box-shadow: 0 4px 12px rgba(0, 153, 255, 0.3);
+  text-decoration: none;
 }
 
-.btn-moje-osiedle:hover {
-  transform: translateY(-4px);
+.osiedle-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.osiedle-image-link:hover .osiedle-image {
+  transform: scale(1.05);
+}
+
+.osiedle-image-link:active .osiedle-image {
+  transform: scale(0.98);
+}
+
+.osiedle-image-link:hover {
   box-shadow: 0 8px 16px rgba(0, 153, 255, 0.4);
-}
-
-.btn-moje-osiedle:active {
-  transform: translateY(-2px);
 }
 
 .pakiety-image {
