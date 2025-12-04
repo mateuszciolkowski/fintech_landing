@@ -15,7 +15,7 @@ services:
     # Mapowanie portów: HOST_PORT:CONTAINER_PORT
     # Umożliwia dostęp do aplikacji przez port 3002 na hoście
     ports:
-      - "3002:3002"
+      - "5022:5022"
 
     # Jeśli masz bazę danych lub inne usługi, możesz je tutaj dodać
     # depends_on:

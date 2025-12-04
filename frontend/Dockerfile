@@ -21,7 +21,7 @@ RUN npm run build
 RUN npm install -g serve
 
 # Expose port
-EXPOSE 3002
+EXPOSE 5022
 
 # Uruchomienie serwera na porcie 3002
-CMD ["serve", "-s", "dist", "-l", "3002"]
+CMD ["serve", "-s", "dist", "-l", "5022"]
