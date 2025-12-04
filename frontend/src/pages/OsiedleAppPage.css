@@ -1,0 +1,284 @@
+.osiedle-app-page {
+  min-height: 100vh;
+  background: white;
+  padding-bottom: 100px;
+}
+
+/* Header */
+.osiedle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: linear-gradient(135deg, #0099FF 0%, #0077DD 100%);
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 153, 255, 0.3);
+}
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.osiedle-header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.header-points {
+  font-size: 14px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+/* Tab Navigation */
+.tab-navigation {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+  overflow-x: auto;
+}
+
+.tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #f8f8f8;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: #999;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  background: #efefef;
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #0099FF 0%, #0077DD 100%);
+  color: white;
+}
+
+.tab-btn span {
+  font-size: 12px;
+}
+
+/* Content Area */
+.osiedle-content {
+  padding: 16px;
+}
+
+/* Tasks Section */
+.tasks-section h2,
+.ranking-section h2,
+.achievements-section h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  color: #333;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.task-card:hover {
+  border-color: #0099FF;
+  box-shadow: 0 4px 12px rgba(0, 153, 255, 0.2);
+}
+
+.task-card.completed {
+  opacity: 0.7;
+  background: #f8f8f8;
+}
+
+.task-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.task-content {
+  flex: 1;
+}
+
+.task-content h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #333;
+}
+
+.task-content p {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+}
+
+.task-points {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.points-badge {
+  background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.completed-check {
+  color: #4caf50;
+}
+
+/* Ranking Section */
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 16px;
+}
+
+.rank-badge {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.ranking-info {
+  flex: 1;
+}
+
+.ranking-info h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #333;
+}
+
+.ranking-info p {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+}
+
+.ranking-points {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.ranking-points .points {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0099FF;
+}
+
+.ranking-points .label {
+  font-size: 10px;
+  color: #999;
+}
+
+/* Achievements Section */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.achievement-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.achievement-card:hover {
+  border-color: #0099FF;
+  box-shadow: 0 4px 12px rgba(0, 153, 255, 0.2);
+}
+
+.achievement-icon {
+  font-size: 40px;
+}
+
+.achievement-card h3 {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0;
+  color: #333;
+}
+
+.achievement-card p {
+  font-size: 11px;
+  color: #999;
+  margin: 0;
+}
